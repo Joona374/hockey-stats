@@ -1,27 +1,34 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Column, Integer, String, Float
+import os
+from dotenv import load_dotenv, find_dotenv
 
+# Self made library that contains the declerative_base and Base models for all tables
+from models import Base, Player
 
+# Fetch the enviroment variables stored on the system
+load_dotenv(find_dotenv())
 
-# Replace placeholders with your MySQL credentials
-DATABASE_URL = "mysql+pymysql://username:password@localhost/your_database"
+# Fetch the enviroment variables stored on the system
+DB_USER = os.getenv("MYSQL_USER")
+DB_PW = os.getenv("MYSQL_PW")
+DB_HOST = os.getenv("MYSQL_HOST")
+DB_NAME = os.getenv("MYSQL_DB")
 
-engine = create_engine(DATABASE_URL)
-Base = declarative_base()
-Session = sessionmaker(bind=engine)
-session = Session()
+print(DB_USER, DB_PW, DB_HOST, DB_NAME)
 
-class Product(Base):
-    __tablename__ = 'products'  # Table name in the database
+# Build the connection string for the database
+DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PW}@{DB_HOST}/{DB_NAME}"
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String(255), nullable=False)
-    price = Column(Float)
-    description = Column(String(255))
+Engine = create_engine(DATABASE_URL, echo=True)
 
-    def __repr__(self):
-        return f"<Product(name={self.name}, price={self.price})>"
-    
-Base.metadata.create_all(engine)
+SessionClass = sessionmaker(bind=Engine)
+Session = SessionClass()
+
+Base.metadata.drop_all(Engine)
+Base.metadata.create_all(Engine)
+
+p1 = Player(sjlName="Sina Peisalo", birthYear=1996)
+Session.add(p1)
+Session.commit()
