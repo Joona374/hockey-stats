@@ -1,0 +1,15 @@
+config_file.py
+
+HISTORICAL SCRAPER
+- Playwright
+- BeautifulSoup 4
+- Scrape data from 2024-25 to 2015-16
+
+
+UPDATE SCRAPER
+
+DATABASE
+
+API
+
+WEBAPP
