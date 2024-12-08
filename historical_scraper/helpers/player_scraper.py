@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 import sys
-from models.player import Player
-from models.season import Season, GoalieSeason, PlayerSeason, GoalieSeasonLevel, PlayerSeasonLevel
-from config import CURRENT_YEAR
-from helpers.utils import getSeasonsToScrape, parsePosition, parsePersonalDetails, parseAgeGroupLevelAndClub, parseSeasonAllGoalieStas, parseGoalieStats, parseSeasonAllPlayerStas, parsePlayerStats
+from historical_scraper.models.player import Player
+from historical_scraper.models.season import GoalieSeason, PlayerSeason, GoalieSeasonLevel, PlayerSeasonLevel
+from historical_scraper.config import CURRENT_YEAR
+from historical_scraper.helpers.utils import getSeasonsToScrape, parsePosition, parsePersonalDetails, parseAgeGroupLevelAndClub, parseSeasonAllGoalieStas, parseGoalieStats, parseSeasonAllPlayerStas, parsePlayerStats
 
 
 def fetchPlayerCareerData(PPlayerLink: str, PPlayerObject: Player, PPage: object) -> dict:

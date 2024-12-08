@@ -1,6 +1,6 @@
-from config import CURRENT_YEAR
+from historical_scraper.config import CURRENT_YEAR
 from bs4 import BeautifulSoup
-from models import Player, GoalieSeason, PlayerSeason, GoalieSeasonLevel, PlayerSeasonLevel
+from historical_scraper.models import Player, GoalieSeason, PlayerSeason, GoalieSeasonLevel, PlayerSeasonLevel
 import sys
 
 def getSeasons(PAmmount: int, PSeasons: list[str]) -> None:

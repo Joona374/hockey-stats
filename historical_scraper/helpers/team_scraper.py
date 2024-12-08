@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
-from models.team import Team
-from models.player import Player
-from helpers.utils import getSeasons
+from historical_scraper.models.team import Team
+from historical_scraper.models.player import Player
+from historical_scraper.helpers.utils import getSeasons
 
 def fetchTeamHtml(PSeasons: list[str], PPage: object, PTeamObject: Team) -> None:
     """
