@@ -1,12 +1,12 @@
 from database.connection import createEmptyTables
 from database.converters import playerConverter
+from database.writer import writeEntirePlayerToDb
 from historical_scraper import oneGoalieTest
 
 # Only do this if you want a fresh empty database
 createEmptyTables()
 Goalie = oneGoalieTest()
-Player = playerConverter(Goalie)
-print(Player)
+writeEntirePlayerToDb(Goalie)
 
 
 

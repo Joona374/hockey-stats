@@ -21,7 +21,7 @@ class Player:
 
     def __str__(self):
         """Returns a string representation of the Player object."""
-        return f"{self.sjlName} {self.position} Player Object str representation"
+        return f"{self.sjlName} {self.position} {self.seasons} Player Object str representation"
 
     def addSeason(self, season):
         """Adds a season to the player's list of seasons."""

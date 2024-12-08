@@ -12,18 +12,22 @@ def playerConverter(PlayerObject: PlayerObject) -> PlayerRow:
         birthYear = PlayerObject.birthYear
     )
 
-def goalieSeasonConverter(GoalieSeasonObject: GoalieSeasonObject, playerId: int) -> GoalieSeasonRow:
+def goalieSeasonConverter(GoalieSeasonObject: GoalieSeasonObject, PplayerId: int) -> GoalieSeasonRow:
+    SplitTOI = GoalieSeasonObject.timeOnIce.split(":")
+    Seconds = int(SplitTOI[0]) * 60 + int(SplitTOI[1])
+    ParsedTimeOnIce = Seconds / 60
+    
     return GoalieSeasonRow(
         year = GoalieSeasonObject.year,
         games = GoalieSeasonObject.games,
         played = GoalieSeasonObject.played,
         goalsAllowed = GoalieSeasonObject.goalsAllowed,
-        timeOnIce = GoalieSeasonObject.timeOnIce,
+        timeOnIce = ParsedTimeOnIce,
         gaa = GoalieSeasonObject.gaa,
-        player_id = playerId        # This is not available in the GoalieSeasonObject, as the id is the "row id" in the players table in the database.
+        playerId = PplayerId        # This is not available in the GoalieSeasonObject, as the id is the "row id" in the players table in the database.
     )
 
-def playerSeasonConverter(PlayerSeasonObject: PlayerSeasonObject, playerId: int) -> PlayerSeasonRow:
+def playerSeasonConverter(PlayerSeasonObject: PlayerSeasonObject, PplayerId: int) -> PlayerSeasonRow:
     return PlayerSeasonRow(
         year = PlayerSeasonObject.year,
         games = PlayerSeasonObject.games,
@@ -34,14 +38,16 @@ def playerSeasonConverter(PlayerSeasonObject: PlayerSeasonObject, playerId: int)
         ppGoals = PlayerSeasonObject.ppGoals,
         shGoals = PlayerSeasonObject.shGoals,
         soGoals = PlayerSeasonObject.soGoals,
-        player_id = playerId        # This is not available in the PlayerSeasonObject, as the id is the "row id" in the players table in the database.
+        playerId = PplayerId        # This is not available in the PlayerSeasonObject, as the id is the "row id" in the players table in the database.
     )
 
 def goalieSeasonLevelConverter(GoalieSeasonLevelObject: GoalieSeasonLevelObject, 
+                               seasonRowId: int,
                                clubRowId: int, 
                                levelRowId: int, 
-                               ageGroupRowId: int, 
-                               seasonRowId: int) -> GoalieSeasonLevelRow:
+                               ageGroupRowId: int,
+                               playerId: int
+                               ) -> GoalieSeasonLevelRow:
     
     return GoalieSeasonLevelRow(
         # These are all ids pointing to rows in different tables. They are passed as parameters.
@@ -49,6 +55,7 @@ def goalieSeasonLevelConverter(GoalieSeasonLevelObject: GoalieSeasonLevelObject,
         levelId = levelRowId,       # Points to the row in "levels" table - levels.id
         ageGroupId = ageGroupRowId, # Points to the row in "age_groups" table - age_groups.id
         seasonId = seasonRowId,     # Points to the row in "goalie_seasons" table - goalie_seasons.id
+        playerId = playerId,        # Points to the row in "players" table - players.id
 
         # These are the values from the GoalieSeasonLevelObject
         games = GoalieSeasonLevelObject.games,
@@ -59,10 +66,12 @@ def goalieSeasonLevelConverter(GoalieSeasonLevelObject: GoalieSeasonLevelObject,
     )
 
 def playerSeasonLevelConverter(PlayerSeasonLevelObject: PlayerSeasonLevelObject, 
+                               seasonRowId: int,
                                clubRowId: int,
                                levelRowId: int,
                                ageGroupRowId: int,
-                               seasonRowId: int) -> PlayerSeasonLevelRow:
+                               playerId: int
+                               ) -> PlayerSeasonLevelRow:
     
     return PlayerSeasonLevelRow(
         # These are all ids pointing to rows in different tables. They are passed as parameters.
@@ -70,6 +79,7 @@ def playerSeasonLevelConverter(PlayerSeasonLevelObject: PlayerSeasonLevelObject,
         levelId = levelRowId,       # Points to the row in "levels" table - levels.id
         ageGroupId = ageGroupRowId, # Points to the row in "age_groups" table - age_groups.id
         seasonId = seasonRowId,     # Points to the row in "player_seasons" table - player_seasons.id
+        playerId = playerId,        # Points to the row in "players" table - players.id
 
         # These are the values from the PlayerSeasonLevelObject
         games = PlayerSeasonLevelObject.games,

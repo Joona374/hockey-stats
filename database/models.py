@@ -32,7 +32,13 @@ class Player(Base):
 
     goalie_seasons = relationship("GoalieSeason", back_populates="player")
     player_seasons = relationship("PlayerSeason", back_populates="player")
-        
+    goalie_season_level = relationship("GoalieSeasonLevel", back_populates="player")
+    player_season_level = relationship("PlayerSeasonLevel", back_populates="player")
+
+    def __str__(self):
+        """Returns a string representation of the Player object."""
+        return f"{self.sjlName} {self.position} {self.birthYear} Player Row str representation"
+
 class GoalieSeason(Base):
     """
     "goalie_seasons" table
@@ -44,7 +50,7 @@ class GoalieSeason(Base):
     - goalsAllowed = Column(Integer)
     - timeOnIce = Column(Float)
     - gaa = Column(Float)
-    - player_id = Column(Integer, ForeignKey('players.id'))
+    - playerId = Column(Integer, ForeignKey('players.id'))
 
     - player = relationship("Player", back_populates="goalie_seasons")
     - seasonLevelStats = relationship("GoalieSeasonLevel", back_populates="season")
@@ -58,7 +64,7 @@ class GoalieSeason(Base):
     goalsAllowed = Column(Integer)
     timeOnIce = Column(Float)
     gaa = Column(Float)
-    player_id = Column(Integer, ForeignKey('players.id'))
+    playerId = Column(Integer, ForeignKey('players.id'))
 
     player = relationship("Player", back_populates="goalie_seasons")
     seasonLevelStats = relationship("GoalieSeasonLevel", back_populates="season")
@@ -93,7 +99,7 @@ class PlayerSeason(Base):
     ppGoals = Column(Integer)
     shGoals = Column(Integer)
     soGoals = Column(Integer)
-    player_id = Column(Integer, ForeignKey('players.id')) 
+    playerId = Column(Integer, ForeignKey('players.id')) 
 
     player = relationship("Player", back_populates="player_seasons")
     seasonLevelStats = relationship("PlayerSeasonLevel", back_populates="season")
@@ -133,7 +139,9 @@ class GoalieSeasonLevel(Base):
     saves = Column(Integer)
     savePercentage = Column(Float)
     seasonId = Column(Integer, ForeignKey("goalie_seasons.id"))
+    playerId = Column(Integer, ForeignKey('players.id'))
 
+    player = relationship("Player", back_populates="goalie_season_level")
     season = relationship("GoalieSeason", back_populates="seasonLevelStats")
     club = relationship("Club", back_populates="goalieSeasonLevel")
     level = relationship("Level", back_populates="goalieSeasonLevel")
@@ -172,7 +180,9 @@ class PlayerSeasonLevel(Base):
     points = Column(Integer)
     penaltyMinutes = Column(Integer)
     seasonId = Column(Integer, ForeignKey("player_seasons.id"))
+    playerId = Column(Integer, ForeignKey('players.id')) 
 
+    player = relationship("Player", back_populates="player_season_level")
     season = relationship("PlayerSeason", back_populates="seasonLevelStats")
     club = relationship("Club", back_populates="playerSeasonLevel")
     level = relationship("Level", back_populates="playerSeasonLevel")
