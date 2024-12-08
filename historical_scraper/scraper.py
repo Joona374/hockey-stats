@@ -53,7 +53,7 @@ def main():
     print("Scraping script is live")
     
     # Init the containers
-    ClubTeamList = []   # List of Team objects. These mainly just contain the html of the players for each season. Used just until we manage to parse the html into objects.
+    ClubTeamList = []    # List of Team objects. These mainly just contain the html of the players for each season. Used just until we manage to parse the html into objects.
     PlayersDict = {}     # Dict of player objects. These contain all the player objects containing the actual data
     
     with sync_playwright() as p:
@@ -81,9 +81,9 @@ def main():
     writeSeasonLevelDetails(PlayersDict)
     
     ClubTeamList.clear()
-    PlayersDict.clear()
+    
 
-    return None
+    return PlayersDict
 
 if __name__ == "__main__":
     # main()

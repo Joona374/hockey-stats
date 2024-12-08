@@ -17,16 +17,30 @@ class GoalieSeason:
         self.seasonLevelStats = []
         self.createStats()
 
-    # The createStats method parses the dictionary and assigns to instance variables
     def createStats(self):
+        """
+        Parses the statsDict and assigns the values to the instance variables:
+        - games: Number of games in the roster.
+        - played: Number of games played.
+        - goalsAllowed: Number of goals allowed.
+        - timeOnIce: Total time on ice.
+        - gaa: Goals against average.
+        """
+
         self.games = self.statsDict['Games']
         self.played = self.statsDict['Played']
         self.goalsAllowed = self.statsDict['GoalsAllowed']
         self.timeOnIce = self.statsDict['TimeOnIce']
         self.gaa = self.statsDict['Gaa']
 
-    # The addLevelStat method allows a GoalieSeasonLevel object to be added to the list of season level stats  
     def addLevelStat(self, levelStat):
+        """
+        Adds a GoalieSeasonLevel object to the list of season level stats.
+
+        Args:
+            levelStat (GoalieSeasonLevel): The level stat object to be added to the seasonLevelStats list.
+        """
+
         self.seasonLevelStats.append(levelStat)
 
     def __str__(self):
@@ -54,8 +68,18 @@ class PlayerSeason:
         self.seasonLevelStats = []
         self.createStats()
 
-    # The createStats method parses the dictionary and assigns to instance variables
     def createStats(self):
+        """
+        Parses the statsDict and assigns the values to the instance variables:
+        - games: Number of games in the roster.
+        - goals: Number of goals scored.
+        - assists: Number of assists.
+        - points: Total points.
+        - penaltyMinutes: Number of penalty minutes.
+        - ppGoals: Number of power play goals.
+        - shGoals: Number of short handed goals.
+        - soGoals: Number of shootout goals.
+        """
         self.games = self.statsDict['Games']
         self.goals = self.statsDict['Goals']
         self.assists = self.statsDict['Assists']
@@ -65,8 +89,10 @@ class PlayerSeason:
         self.shGoals = self.statsDict['ShGoals']
         self.soGoals = self.statsDict['SoGoals']
 
-    # The addLevelStat method allows a PlayerSeasonLevel object to be added to the list of season level stats  
     def addLevelStat(self, levelStat):
+        """
+        Adds a PlayerSeasonLevel object to the list of season level stats  
+        """
         self.seasonLevelStats.append(levelStat)
 
     def __str__(self):

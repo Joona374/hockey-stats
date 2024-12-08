@@ -181,6 +181,22 @@ def writeSeasonLevelDetails(PPlayersDict: dict) -> None:
     return None
 
 def fetchRetiredPlayerCareerData(PPlayerLink: str, PPlayerObject: Player, PPage: object) -> dict:
+    """
+    Fetches the player CAREER data for a given retired player link and stores it in the provided Player object.
+
+    This function takes a player link, a dictionary to store the player data in, and a Page object as inputs.
+    It opens a browser, goes to the player page, waits for dynamic content to load, and then fetches the player's personal details and position.
+    It then fetches the player's season stats for each season they played in and stores them in the provided dictionary.
+
+    Args:
+        PPlayerLink (str): The link to the player's page.
+        PlayerDataDict (dict): The dictionary to store the player data in.
+        PPage (object): The Page object to use.
+
+    Returns:
+        dict: The dictionary with the player data, containing the player's personal details, position and season stats.
+    """
+
     # This gets the last 10 seasons as strings  ["2025", "2024", "2023"...]
     SeasonsToScrape = getSeasonsToScrape("2000") # "2000" because its far enough birthdate to give the full 10 years.
     LastSeasonPlayed = None

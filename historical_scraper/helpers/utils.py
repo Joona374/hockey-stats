@@ -122,7 +122,7 @@ def parsePersonalDetails(PRawHtml: str) -> dict:
         dict: A dictionary containing the personal details of the player, currently only containing the date of birth.
     """
     Soup = BeautifulSoup(PRawHtml, "html.parser")                           # Parse the raw HTML
-    DateOfBirth = Soup.find("div", id="pcm-player-dob").text.strip()    # Get the date of birth
+    DateOfBirth = Soup.find("div", id="pcm-player-dob").text.strip()        # Get the date of birth
     PersonalDetailsDict = {"DateOfBirth": DateOfBirth}                      # Create a dictionary with the date of birth (and possible future details)
     return PersonalDetailsDict                                              # Return the dictionary  
 
