@@ -24,6 +24,6 @@ class Player:
         return f"{self.sjlName} {self.position} {self.seasons} Player Object str representation"
 
     def addSeason(self, season):
-        """Adds a season to the player's list of seasons."""
+        """Adds a season object to the player's list of seasons."""
         self.seasons.append(season)
         return None

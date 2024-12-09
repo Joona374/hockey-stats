@@ -170,9 +170,9 @@ class PlayerSeasonLevel(Base):
     __tablename__ = "player_season_level"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    club_id = Column(Integer, ForeignKey("clubs.id"))
-    level_id = Column(Integer, ForeignKey("levels.id"))
-    ageGroup_id = Column(Integer, ForeignKey("age_groups.id"))
+    clubId = Column(Integer, ForeignKey("clubs.id"))
+    levelId = Column(Integer, ForeignKey("levels.id"))
+    ageGroupId = Column(Integer, ForeignKey("age_groups.id"))
 
     games = Column(Integer)
     goals = Column(Integer)

@@ -70,14 +70,14 @@ def parsePlayerRowsFromHtml(PRawHtml: str, PPlayersDict: dict, PParseStaff: bool
                 EpName = f"{NameParts[1]} {NameParts[0].capitalize()}"  # Get the name in EP format
 
                 # Create a player object, and save the names and link to the player object
-                PlayerObject = Player(SjlName, EpName, f"https://www.leijonat.fi/index.php/index.php/{PlayerLink['href']}")     # Create a player object
+                PlayerObject = Player(SjlName, EpName, f"https://www.leijonat.fi/{PlayerLink['href']}")     # Create a player object
 
             else:
                 print("No player link")
         else:
             print("No name div")
         
-        if SjlName not in PPlayersDict: # Check if the player (object) is already in the dict. This is to avoid duplicates.
+        if SjlName not in PPlayersDict: # Check if the player (object) is already in the dict. This is to avoid duplicates in data fetching.
             PPlayersDict[SjlName] = PlayerObject # This edits the dict in place. Each player is a Player object.
         else:
             print(f"Player {SjlName} already in dict")
@@ -101,7 +101,7 @@ def scrapeTeamData(PTeamId: int, PPage: object, PClubList: list, PSeasons: list[
     print("Starting to scrape team: " + PTeamId)
 
     # Go to the teams page
-    Link = f"https://www.leijonat.fi/index.php/index.php/joukkueet?teamid={PTeamId}"
+    Link = f"https://www.leijonat.fi/joukkueet?teamid={PTeamId}"
     PPage.goto(Link)
     PPage.wait_for_timeout(000)  
     PPage.wait_for_selector("#tcm-team-official-name", timeout=5000)

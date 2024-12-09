@@ -32,9 +32,12 @@ def goalieSeasonConverter(GoalieSeasonObject: GoalieSeasonObject, PplayerId: int
     Returns:
         GoalieSeasonRow: The converted GoalieSeasonRow (Base). This is the row in the "goalies" table in the database.
     """    
-    SplitTOI = GoalieSeasonObject.timeOnIce.split(":")
-    Seconds = int(SplitTOI[0]) * 60 + int(SplitTOI[1])
-    ParsedTimeOnIce = Seconds / 60
+    if GoalieSeasonObject.timeOnIce in ["", None]:
+        ParsedTimeOnIce = 0
+    else:
+        SplitTOI = GoalieSeasonObject.timeOnIce.split(":")
+        Seconds = int(SplitTOI[0]) * 60 + int(SplitTOI[1])
+        ParsedTimeOnIce = Seconds / 60
     
     return GoalieSeasonRow(
         year = GoalieSeasonObject.year,
@@ -57,6 +60,9 @@ def playerSeasonConverter(PlayerSeasonObject: PlayerSeasonObject, PplayerId: int
     Returns:
         PlayerSeasonRow: The converted PlayerSeasonRow (Base). This is the row in the "player_seasons" table in the database.
     """
+    if PlayerSeasonObject.soGoals in [None, ""]:
+        PlayerSeasonObject.soGoals = 0
+
     return PlayerSeasonRow(
         year = PlayerSeasonObject.year,
         games = PlayerSeasonObject.games,

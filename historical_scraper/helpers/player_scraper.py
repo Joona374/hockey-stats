@@ -43,7 +43,8 @@ def fetchPlayerCareerData(PPlayerLink: str, PPlayerObject: Player, PPage: object
         Position = parsePosition(PositionHtml)                              # Parse the position into a string
         PPlayerObject.position = Position                                   # Add the position to the player object for player
     except:
-        print(f"Failed to scrape {PPlayerObject.sjlName}")                  # This is a player that is no more active, so sjl displays the information differently.
+        # This is a player that is no more active, so sjl displays the information differently.
+        print(f"Failed to scrape {PPlayerObject.sjlName}. He hasn't played in the current year.\nResortin to using fetchRetiredPlayerCareerData")
         fetchRetiredPlayerCareerData(PPlayerLink, PPlayerObject, PPage)     # This function does its best to handle the case, and still record all available data.
         return None                                                         # Terminate the regular scraping. 
 
@@ -234,7 +235,7 @@ def fetchRetiredPlayerCareerData(PPlayerLink: str, PPlayerObject: Player, PPage:
             for Level in StatsDict["GoalieLevelStats"]:   # DEBUG PRINT
                 print(f"{Level}")
             # PlayerDataDict[Season] = StatsDict
-
+            PPlayerObject.addSeason(SeasonObject)
 
         else: # If position is "Kenttäpelaaja"
             print(f"{Season} SeasonAllPlayerStas: {StatsDict["SeasonAllPlayerStas"]}")
@@ -242,6 +243,7 @@ def fetchRetiredPlayerCareerData(PPlayerLink: str, PPlayerObject: Player, PPage:
                 print(f"{Level}")
             # PlayerDataDict[Season] = StatsDict
             SeasonObject = PlayerSeason(Season, StatsDict["SeasonAllPlayerStas"])
+            PPlayerObject.addSeason(SeasonObject)
 
 
     return None

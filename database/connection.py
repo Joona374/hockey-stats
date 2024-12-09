@@ -14,7 +14,7 @@ DB_NAME = os.getenv("MYSQL_DB")
 # Build the connection string for the database
 DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PW}@{DB_HOST}/{DB_NAME}"
 
-Engine = create_engine(DATABASE_URL, echo=True)
+Engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=Engine)
 
 def createEmptyTables():

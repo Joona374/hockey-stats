@@ -111,7 +111,7 @@ def writeSeasonToDb(Season: object, PlayerId: int, Position: str, Session: objec
     """
     if Position == "Maalivahti":            
         SeasonRow = goalieSeasonConverter(Season, PlayerId) # This converts the Season object (from scraping) to a goalieSeasonRow (Base, used in SQL Alchemy)
-    elif Position == "Kenttäpelaaja":
+    elif Position in ["Kenttäpelaaja", "Puolustaja", "Hyökkääjä"]:
         SeasonRow = playerSeasonConverter(Season, PlayerId) # This converts the Season object (from scraping) to a playerSeasonRow (Base, used in SQL Alchemy)
     else:
         raise ValueError(f"Unsupported position: {Position} in writeSeasonToDb")    # Just in case the position is not supported
@@ -138,7 +138,7 @@ def writeSeasonLevelToDb(SeasonLevelObject: object, SeasonId: int, PlayerObject:
     
     if PlayerObject.position == "Maalivahti":
         SeasonLevelStatRow = goalieSeasonLevelConverter(SeasonLevelObject, SeasonId, clubId, levelId, ageGroupId, PlayerObject.id)  # This converts the goalieSeasonLevelObject (from scraping) to a goalieSeasonLevelRow (Base, used in SQL Alchemy) 
-    elif PlayerObject.position == "Kenttäpelaaja":
+    elif PlayerObject.position in ["Kenttäpelaaja", "Puolustaja", "Hyökkääjä"]:
         SeasonLevelStatRow = playerSeasonLevelConverter(SeasonLevelObject, SeasonId, clubId, levelId, ageGroupId, PlayerObject.id)  # This converts the playerSeasonLevelObject (from scraping) to a playerSeasonLevelRow (Base, used in SQL Alchemy) 
     else:
         raise ValueError(f"Unsupported position: {PlayerObject.position} in writeSeasonLevelToDb")  # Just in case the position is not supported

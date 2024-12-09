@@ -1,3 +1,3 @@
-from .scraper import main, oneGoalieTest
+from .scraper import main, oneGoalieTest, onePlayerTest
 from .models import *
 from .helpers import *
