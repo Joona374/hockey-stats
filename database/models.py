@@ -104,6 +104,10 @@ class PlayerSeason(Base):
     player = relationship("Player", back_populates="player_seasons")
     seasonLevelStats = relationship("PlayerSeasonLevel", back_populates="season")
 
+    def __str__(self):
+        """Returns a string representation of the PlayerSeason object."""
+        return f"{self.year} {self.games} {self.goals} {self.assists} {self.points} {self.penaltyMinutes} {self.ppGoals} {self.shGoals} {self.soGoals} PlayerSeason Row str representation"
+
     
 class GoalieSeasonLevel(Base):
     """
@@ -119,7 +123,8 @@ class GoalieSeasonLevel(Base):
     - goalsAllowed = Column(Integer)
     - saves = Column(Integer)
     - savePercentage = Column(Float)
-    - season_id = Column(Integer, ForeignKey("goalie_seasons.id"))
+    - seasonId = Column(Integer, ForeignKey("goalie_seasons.id"))
+    - playerId = Column(Integer, ForeignKey('players.id'))
 
     - season = relationship("GoalieSeason", back_populates="seasonLevelStats")
     - club = relationship("Club", back_populates="goalieSeasonLevels")
@@ -147,6 +152,9 @@ class GoalieSeasonLevel(Base):
     level = relationship("Level", back_populates="goalieSeasonLevel")
     ageGroup = relationship("AgeGroup", back_populates="goalieSeasonLevel")
 
+    def __str__(self):
+        return f"{self.player} {self.level} {self.ageGroup} Goalie Season Level Row str representation"
+
 class PlayerSeasonLevel(Base):
     """
     "player_season_level" table
@@ -161,6 +169,8 @@ class PlayerSeasonLevel(Base):
     - assists = Column(Integer)
     - points = Column(Integer)
     - penaltyMinutes = Column(Integer)
+    - seasonId = Column(Integer, ForeignKey("player_seasons.id"))
+    - playerId = Column(Integer, ForeignKey('players.id'))
 
     - season = relationship("PlayerSeason", back_populates="seasonLevelStats")
     - club = relationship("Club", back_populates="playerSeasonLevels")
@@ -187,6 +197,10 @@ class PlayerSeasonLevel(Base):
     club = relationship("Club", back_populates="playerSeasonLevel")
     level = relationship("Level", back_populates="playerSeasonLevel")
     ageGroup = relationship("AgeGroup", back_populates="playerSeasonLevel")
+
+    def __str__ (self):
+        """Returns a string representation of the PlayerSeasonLevel object."""
+        return f"{self.player} {self.level} {self.ageGroup} PlayerSeasonLevel Row str representation"
 
 class Club(Base):
     """
@@ -224,6 +238,10 @@ class Level(Base):
     goalieSeasonLevel = relationship("GoalieSeasonLevel", back_populates="level")
     playerSeasonLevel = relationship("PlayerSeasonLevel", back_populates="level")
 
+    def __str__(self):
+        return f"{self.levelName} Level Row str representation"
+
+
 class AgeGroup(Base):
     """
     "age_groups" table
@@ -239,3 +257,6 @@ class AgeGroup(Base):
 
     goalieSeasonLevel = relationship("GoalieSeasonLevel", back_populates="ageGroup")
     playerSeasonLevel = relationship("PlayerSeasonLevel", back_populates="ageGroup")
+
+    def __str__(self):
+        return f"{self.ageGroupName} AgeGroup Row str representation"

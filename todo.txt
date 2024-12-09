@@ -1,0 +1,5 @@
+9.12.2024:
+1. Test if writing players to db works with more seasons and or clubs
+2. Start creating the API <-> Database connetion
+    2.1 Fetch all players
+    2.2 Fetch all seasons for player

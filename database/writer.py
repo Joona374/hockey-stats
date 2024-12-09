@@ -103,7 +103,7 @@ def writeSeasonToDb(Season: object, PlayerId: int, Position: str, Session: objec
     Args:
         Season (object): The season to write to the database.
         PlayerId (int): The id of the player row in the players table to link the season to.
-        Position (str): The position of the player, either "Maalivahti" or "Kenttäpelaaja".
+        Position (str): The position of the player, either "Maalivahti", "Hyökkääjä", "Puolustaja" or "Kenttäpelaaja".
         Session (object): The SQLAlchemy session to use for the query.
     
     Returns:

@@ -6,7 +6,7 @@ class Player:
     - epName (str): The player's name in the format "Firstname Lastname".
     - sjlLink (str): A link to the player's page on the SJL website.
     - birthYear (int): The player's birth year.
-    - position (str): The player's position, either "Maalivahti" or "Kenttäpelaaja".
+    - position (str): The player's position, either "Maalivahti" or "Kenttäpelaaja", "Hyökkääjä" or "Puolustaja".
     - seasons (list): A list of the player's seasons, which are objects of class GoalieSeason or PlayerSeason.
     """
 

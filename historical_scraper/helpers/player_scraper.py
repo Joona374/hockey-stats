@@ -60,7 +60,7 @@ def fetchPlayerSeasonHtml(PPage: object, PSeason: str, PPosition: str) -> dict:
     Args:
         PPage (object): The page object representing the player's webpage.
         PSeason (str): The season for which the stats are to be fetched.
-        PPosition (str): The position of the player, either "Maalivahti" (goalie) or "Kenttäpelaaja" (skater).
+        PPosition (str): The position of the player, either "Maalivahti" (goalie) or "Kenttäpelaaja" (skater), "Hyökkääjä" or "Puolustaja".
 
     Returns:
         dict: A dictionary containing the parsed season statistics. For goalies, it includes "SeasonAllGoalieStas" (dict) and "GoalieLevelStats" (list of dicts). For skaters, it includes "SeasonAllPlayerStas" (dict) and "PlayerLevelStats" (list of dicts).
@@ -97,7 +97,7 @@ def fetchPlayerSeasonHtml(PPage: object, PSeason: str, PPosition: str) -> dict:
         # Store the total stats and goalie stats in a dict
         RawHtml = {"SeasonAllGoalieStas": SeasonAllStats, "GoalieLevelStats": GoalieLevelStats}   
 
-    else: # Position is "Kenttäpelaaja" aka player
+    else: # Position is "Kenttäpelaaja" aka player or "Hyökkääjä" or "Puolustaja"
         SeasonAllStatsHtml = PPage.locator("#psac-all-skater-stats-container").inner_html()         # Total stats for Player THIS SEASON
         SeasonAllStats = parseSeasonAllPlayerStas(SeasonAllStatsHtml)                               # Parse the total stats into a dict
 
@@ -153,7 +153,7 @@ def scrapeSeasonsForPlayer(PPlayerObject: Player, PPage: object):
                 SeasonObject.addLevelStat(SeasonLevelObject)                        # Add the level object to the season object.seasonLevelStats
 
 
-        else: # If position is "Kenttäpelaaja"
+        else: # If position is "Kenttäpelaaja" "Puolustaja" or "Hyökkääjä"
             SeasonObject = PlayerSeason(Season, StatsDict["SeasonAllPlayerStas"])   # Create a object to represent the whole season
             PPlayerObject.addSeason(SeasonObject)                                   # Add the season object to the player object.seasons
             for Level in StatsDict["PlayerLevelStats"]:                             # Iterate over all the levels in the season
@@ -237,7 +237,7 @@ def fetchRetiredPlayerCareerData(PPlayerLink: str, PPlayerObject: Player, PPage:
             # PlayerDataDict[Season] = StatsDict
             PPlayerObject.addSeason(SeasonObject)
 
-        else: # If position is "Kenttäpelaaja"
+        else: # If position is "Kenttäpelaaja", "Hyökkääjä", "Puolustaja"
             print(f"{Season} SeasonAllPlayerStas: {StatsDict["SeasonAllPlayerStas"]}")
             for Level in StatsDict["PlayerLevelStats"]:   # DEBUG PRINT
                 print(f"{Level}")
@@ -270,7 +270,7 @@ def checkRetiredPoistion(PPlayerObject: Player, PPage: object) -> None:
     # Player is a skater
     if PlayerDiv.is_visible():
         print(f"{PPlayerObject.sjlName} is a skater")
-        PPlayerObject.position = "Kenttäpelaaja"
+        PPlayerObject.position in ["Kenttäpelaaja", "Hyökkääjä", "Puolustaja"]
 
     # Player is not a goalie or skater
     if not GoalieDiv.is_visible() and not PlayerDiv.is_visible():
