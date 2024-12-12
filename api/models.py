@@ -1,6 +1,26 @@
 from pydantic import BaseModel
 from typing import Optional, List
 
+class goalieSeasonLevelResponse(BaseModel):
+    id: int
+    clubId: int
+    clubName: Optional[str]
+    levelId: int
+    levelName: Optional[str]
+    ageGroupId: int
+    ageGroupName: Optional[str]
+    seasonId: int
+    playerId: int
+
+    games: int
+    played: int
+    goalsAllowed: int
+    saves: int
+    savePercentage: float
+
+    class Config:
+        from_attributes = True
+
 class playerSeasonLevelResponse(BaseModel):
     """
     Represents a response model for a player's performance in one level
@@ -32,6 +52,34 @@ class playerSeasonLevelResponse(BaseModel):
     class Config:
         from_attributes = True
 
+class seasonLevelResponse(BaseModel):
+    goalies: Optional[List[goalieSeasonLevelResponse]] = None
+    players: Optional[List[playerSeasonLevelResponse]] = None        
+
+class goalieSeasonResponse(BaseModel):
+    """
+    Represents a response model for a season in the API. This does not directly
+    correspond to a database model, but is instead created in
+    api.db_communicators.py by combining data from the "player_seasons" and
+    "player_season_level" tables. The "seasonLevels" field is a list of
+    goalieSeasonLevelResponse objects, which are not present in the database
+    model.
+    """
+    id: int
+    year: int
+    games: int
+    played: int
+    goalsAllowed: int
+    timeOnIce: float
+    gaa: float
+    playerId: int
+
+    # List of seasonLevels that are part of this season. This is not present in the database model, but its created in api.db_communicators.py
+    seasonLevels: Optional[List[goalieSeasonLevelResponse]] = None 
+
+    class Config:
+        from_attributes = True
+
 class playerSeasonResponse(BaseModel):
     """
     Represents a response model for a season in the API. This does not directly
@@ -58,6 +106,29 @@ class playerSeasonResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class GoalieResponse(BaseModel):
+    """
+    Represents a response model for a goalie in the API. This does not directly
+    correspond to a database model, but is instead created in
+    api.db_communicators.py by combining data from the "players" table and
+    optionally the "playerSeasons" table. The "seasons" field is a list of
+    goalieSeasonResponse objects, which are not present in the database model,
+    but its created in api.db_communicators.py
+    """
+
+    id: int
+    sjlName: str
+    epName: str
+    sjlLink: str
+    birthYear: int
+    position: str
+    
+    # List of seasons the player has played. This is not present in the database model, but its created in api.db_communicators.py
+    seasons: Optional[List[goalieSeasonResponse]] = None  
+
+    class Config:
+        from_attributes = True    
 
 class PlayerResponse(BaseModel):
     """
