@@ -18,7 +18,7 @@ def oneGoalieTest():
     with sync_playwright() as p:
         # Init the browser
         Browser = p.chromium.launch(headless=True)
-        Page = Browser.new_page()   # USE THIS PAGE EVERYWHERE!
+        Page = Browser.new_page()   # USE THIS PAGE EVERYWHERE WITHIN HISTORICAL SCRAPER!
 
         # This scrapes the team pages for the html that contain all players for a specific season.
         # Args: PTeamIds: List of teamIds, PNumberOfSeasons: Number of seasons to scrape (going back from current), PClubList: List to contain Team objects

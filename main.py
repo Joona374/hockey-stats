@@ -5,11 +5,13 @@ from database.reader import getDbContents
 
 from historical_scraper import oneGoalieTest, onePlayerTest, main as scraperMain
 
-from api.api_main import get_all_players
+
+from update_scraper.update_scraped_data import updateLatestData
+
 
 ### THESE ARE FOR UNDER CONSTRUCTION TESTING ###
 
-get_all_players()
+# get_all_players()
 
 # dbDict = getDbContents()        # Queries the database and returns all contents of "players", "clubs", "levels" and "age_groups" tables.
 # createEmptyTables()             # Only do this if you want a fresh empty database
@@ -25,3 +27,7 @@ get_all_players()
 # for Player, PlayerObject in Players.items():
 #     writeEntirePlayerToDb(PlayerObject)   # Writes the goalie (or any player) to the database
 
+
+
+# THIS IS FOR THE UPDATE SCRAPER
+updateLatestData()

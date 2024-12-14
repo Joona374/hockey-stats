@@ -95,7 +95,7 @@ def fetchPlayerSeasonHtml(PPage: object, PSeason: str, PPosition: str) -> dict:
             SeasonAllStats = {"Games": "0", "Played": "0", "GoalsAllowed": "0", "TimeOnIce": "0", "Gaa": "0"}
 
         # Store the total stats and goalie stats in a dict
-        RawHtml = {"SeasonAllGoalieStas": SeasonAllStats, "GoalieLevelStats": GoalieLevelStats}   
+        ParsedStats = {"SeasonAllGoalieStas": SeasonAllStats, "GoalieLevelStats": GoalieLevelStats}   
 
     else: # Position is "Kenttäpelaaja" aka player or "Hyökkääjä" or "Puolustaja"
         SeasonAllStatsHtml = PPage.locator("#psac-all-skater-stats-container").inner_html()         # Total stats for Player THIS SEASON
@@ -120,9 +120,9 @@ def fetchPlayerSeasonHtml(PPage: object, PSeason: str, PPosition: str) -> dict:
             SeasonAllStats = {"Games": "0", "Goals": "0", "Assists": "0", "Points": "0", "PenaltyMinutes": "0", "PpGoals": "0", "ShGoals": "0", "SoGoals": "0"}
 
         # Store the total stats and player stats in a dict
-        RawHtml = {"SeasonAllPlayerStas": SeasonAllStats, "PlayerLevelStats": PlayerLevelStats}
+        ParsedStats = {"SeasonAllPlayerStas": SeasonAllStats, "PlayerLevelStats": PlayerLevelStats}
         
-    return RawHtml
+    return ParsedStats
 
 def scrapeSeasonsForPlayer(PPlayerObject: Player, PPage: object):
     """

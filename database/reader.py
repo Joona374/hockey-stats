@@ -2,6 +2,59 @@ from sqlalchemy.orm import Session
 from database.connection import SessionLocal
 from database.models import Player, PlayerSeason, GoalieSeason, PlayerSeasonLevel, GoalieSeasonLevel, Club, Level, AgeGroup
 
+def getSeasonLevelsForGoalieSeason(PSession: Session, GoalieSeasonId: int) -> list[GoalieSeasonLevel]:
+    """
+    Retrieves all goalie season levels for a given goalie season ID from the database.
+    """
+    return PSession.query(GoalieSeasonLevel).filter_by(seasonId=GoalieSeasonId).all()
+
+def getSeasonLevelsForPlayerSeason(PSession: Session, PlayerSeasonId: int) -> list[PlayerSeasonLevel]:
+    """
+    Retrieves all player season levels for a given player season ID from the database.
+    """
+    return PSession.query(PlayerSeasonLevel).filter_by(seasonId=PlayerSeasonId).all()
+
+def getAllGoalieObjects(PSession: Session) -> list:
+    """
+    Queries the database and returns all Goalie objects as a list.
+    """
+    return PSession.query(Player).filter_by(position="Maalivahti").all()
+
+def getAllPlayerObjects(PSession: Session) -> list:
+    """
+    Queries the database and returns all Player objects as a list.
+    """
+    return PSession.query(Player).filter(Player.position.in_(["Kenttäpelaaja", "Hyökkääjä", "Puolustaja"])).all()
+
+def getSeasonObjectsByYear(PSession: Session, Year: int) -> None:
+    """
+    Retrieves all goalie and player season objects for a given year from the database.
+
+    This function queries the database to obtain all season objects for goalies and players
+    for the specified year. It categorizes the results into goalies and players and stores
+    them in a dictionary.
+
+    Args:
+        PSession (Session): The SQLAlchemy session to use for the query.
+        Year (int): The year for which to retrieve the season objects.
+
+    Returns:
+        dict: A dictionary with two keys, "goalies" and "players", each containing a list
+              of season objects corresponding to that category for the given year.
+    """
+
+    SeasonsContainer = {"goalies": [],
+                        "players": []}
+
+    GoalieSeasons = PSession.query(GoalieSeason).filter_by(year=Year).all()
+    for Season in GoalieSeasons:
+        SeasonsContainer["goalies"].append(Season)
+
+    PlayerSeasons = PSession.query(PlayerSeason).filter_by(year=Year).all()
+    for Season in PlayerSeasons:
+        SeasonsContainer["players"].append(Season)
+
+    return SeasonsContainer
 
 def readOneClubById(PSession: Session, clubId: int) -> object:
     """
