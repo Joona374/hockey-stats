@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+nav {
+    display: flex;
+    height: 5vh;
+    background-color: black;
+    color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+}
+
+nav a {
+    text-decoration: none;
+    color: whitesmoke;
+    margin: 0 2rem;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+    background-color: gray;
+}
+
+footer {
+    display: flex;
+    height: 5vh;
+    background-color: black;
+    color: whitesmoke;
+    justify-content: center;
+    align-items: center;
+}
